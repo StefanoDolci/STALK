@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="STALK" width="100%">
+</p>
+
 # STALK
 
 **S**earch for **T**echnosignature **A**nomalies in **L**ight**K**urves
