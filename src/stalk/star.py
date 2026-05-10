@@ -5,6 +5,14 @@ Stellar model with quadratic limb darkening for transit simulations.
 """
 
 
+# Constants
+#-------------
+R_SUN_M = 6.957e+8
+
+
+
+#-----------------
+
 
 import numpy as np
 from dataclasses import dataclass
@@ -41,7 +49,7 @@ class Star:
         """
         Stellar radius (meters)
         """
-        R_SUN_M = 6.957e+8
+        
         return self.radius * R_SUN_M
 
 
