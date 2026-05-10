@@ -19,9 +19,11 @@ AU_M = 1.496e11
 @dataclass
 class Planet: 
     radius : float = 1.0            # Radius of the planet in Earth radii
-    period : float = 365.25         # Period od the orbit in days
-    semi_maj_axis : float = 1.0     # Distance from the Star in AU
-    inclination : float = 90.0      # Orbital inclination in degrees ° 
+    period : float = 365.25         # Period od the orbit [days]
+    semi_maj_axis : float = 1.0     # Distance from the Star [AU]
+    inclination : float = 90.0      # Orbital inclination [degrees] 
+    eccentricity : float = 0.0      # Eccentricity 0 = circle
+    arg_periastron: float = 90.0    # Omega [degrees]
     name : str = "Planet"
 
 
@@ -68,3 +70,40 @@ class Planet:
         return (self.radius_m /star.radius_m)**2 * 1e+6
     
 
+    def impact_parameter(self,star):
+        """"
+        Formula for impact parameter
+
+        Params
+        -------
+        star : class
+        
+        """
+        inclination = np.radians(self.inclination)
+
+        return ((self.distance_m / star.radius_m) * np.cos(inclination))
+    
+
+    def transit_duration(self,star):
+        """
+        Total duration of the transit (from firts to fourth contact) in hours
+
+        Params
+        ------
+        star : class
+        
+        """
+        # Ratio of the radii
+        k = self.radius_m / star.radius_m
+
+        # Impact parameter
+        b = self.impact_parameter(star)
+
+        arg = (star.radius_m / self.distance_m ) * np.sqrt((1+k)**2 - b**2)
+        T_days = (self.period / np.pi) * np.arcsin(arg)
+
+        ecc_factor = np.sqrt(1 - self.eccentricity**2) / (1 + self.eccentricity * np.sin(np.radians(self.arg_periastron)))
+
+        T_days = T_days * ecc_factor
+        return T_days * 24.0
+    
