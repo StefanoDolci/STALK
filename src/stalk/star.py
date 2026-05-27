@@ -5,17 +5,12 @@ Stellar model with quadratic limb darkening for transit simulations.
 """
 
 
+import numpy as np
+from dataclasses import dataclass
+
 # Constants
 #-------------
 R_SUN_M = 6.957e+8
-
-
-
-#-----------------
-
-
-import numpy as np
-from dataclasses import dataclass
 
 
 
